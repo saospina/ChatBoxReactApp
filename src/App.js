@@ -17,7 +17,7 @@ export default function App() {
       </div>
       <div class="window-body">
         <p>Start typing some shit</p>
-        <ChatRoom />
+        <ChatRoom chat={2} />
       </div>
     </div>
   );

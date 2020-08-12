@@ -6,11 +6,16 @@ export default class ChatRoom extends Component {
     textMessage: "",
     messages: [
       { id: 0, text: "Message 0" },
-      { id: 1, text: "Message 1" },
-      { id: 2, text: "Message 2" },
-      { id: 3, text: "Message 3" }
-    ]
+      { id: 1, text: "Message 1" }
+    ],
+    prueba: []
   };
+
+  handleChatRoom() {
+    const { chat } = this.props;
+    const chatDiv = [...Array(chat).keys()];
+    this.setState({ prueba: chatDiv });
+  }
 
   updateMessage(e) {
     this.setState({ textMessage: e.target.value });
@@ -25,20 +30,33 @@ export default class ChatRoom extends Component {
     };
     messages.push(newTextMessage);
     this.setState({ textMessage: messages });
+    this.setState({ textMessage: "" });
+  }
+
+  componentDidMount() {
+    this.handleChatRoom();
   }
 
   render() {
     const { messages } = this.state;
-    const messagesList = messages.map(messsage => {
+    const messagesList = messages.map((messsage) => {
       return <li key={messsage.id}>{messsage.text}</li>;
     });
     return (
       <div className="chat">
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <input type="text" onChange={this.updateMessage.bind(this)} />
-          <button type="submit">Send Message</button>
-        </form>
-        <ul className="tree-view">{messagesList}</ul>
+        {this.state.prueba.map((prueba) => (
+          <>
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <input
+                type="text"
+                value={this.state.textMessage}
+                onChange={this.updateMessage.bind(this)}
+              />
+              <button type="submit">Send Message</button>
+            </form>
+            <ul className="tree-view">{messagesList}</ul>
+          </>
+        ))}
       </div>
     );
   }
